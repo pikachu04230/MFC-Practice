@@ -1,0 +1,24 @@
+# 編譯檔案
+*.obj
+*.pch
+*.exe
+*.dll
+*.idb
+*.pdb
+Debug/
+Release/
+
+# Windows 系統生成的文件
+Thumbs.db
+ehthumbs.db
+
+# Visual Studio 生成的文件
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# 其他不需要的檔案
+*.log
