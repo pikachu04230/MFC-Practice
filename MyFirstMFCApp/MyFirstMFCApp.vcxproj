@@ -183,6 +183,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CCurrentTime.h" />
     <ClInclude Include="CProgressDlg.h" />
     <ClInclude Include="CWelcomeDlg.h" />
     <ClInclude Include="framework.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CCurrentTime.cpp" />
     <ClCompile Include="CProgressDlg.cpp" />
     <ClCompile Include="CWelcomeDlg.cpp" />
     <ClCompile Include="MyFirstMFCApp.cpp" />

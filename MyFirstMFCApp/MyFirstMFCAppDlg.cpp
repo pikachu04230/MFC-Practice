@@ -8,6 +8,7 @@
 #include "MyFirstMFCAppDlg.h"
 #include "CWelcomeDlg.h"
 #include "CProgressDlg.h"
+#include "CCurrentTime.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -87,6 +88,8 @@ BEGIN_MESSAGE_MAP(CMyFirstMFCAppDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_NCPA, &CMyFirstMFCAppDlg::OnBnClickedButtonNcpa)
 	ON_BN_CLICKED(IDC_WELCOME_DLG_BUTTON, &CMyFirstMFCAppDlg::OnBnClickedWelcomeDlgButton)
 	ON_BN_CLICKED(IDC_PROGRESS_DLG_BUTTON, &CMyFirstMFCAppDlg::OnBnClickedProgressDlgButton)
+	ON_BN_CLICKED(IDC_CURRENTTIME, &CMyFirstMFCAppDlg::OnBnClickedCurrenttime)
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -406,4 +409,35 @@ void CMyFirstMFCAppDlg::OnBnClickedProgressDlgButton()
 	// TODO: 在此加入控制項告知處理常式程式碼
 	CProgressDlg dlg;
 	dlg.DoModal();
+}
+
+
+void CMyFirstMFCAppDlg::OnBnClickedCurrenttime()
+{
+	// TODO: 在此加入控制項告知處理常式程式碼
+	if (m_pCurrentTimeDlg != nullptr && IsWindow(m_pCurrentTimeDlg->m_hWnd))
+	{
+		m_pCurrentTimeDlg->ShowWindow(SW_SHOW);
+		m_pCurrentTimeDlg->SetFocus();
+	}
+	else
+	{
+		m_pCurrentTimeDlg = new CCurrentTime();
+		m_pCurrentTimeDlg->Create(IDD_CURRENTTIME, this);
+		m_pCurrentTimeDlg->ShowWindow(SW_SHOW);
+	}
+}
+
+
+void CMyFirstMFCAppDlg::OnDestroy()
+{
+	// TODO: 在此加入您的訊息處理常式程式碼
+	if (m_pCurrentTimeDlg != nullptr)
+	{
+		m_pCurrentTimeDlg->DestroyWindow();
+		delete m_pCurrentTimeDlg;
+		m_pCurrentTimeDlg = nullptr;
+	}
+
+	CDialogEx::OnDestroy();
 }

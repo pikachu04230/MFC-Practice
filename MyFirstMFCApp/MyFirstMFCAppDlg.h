@@ -1,6 +1,7 @@
 ﻿
 // MyFirstMFCAppDlg.h: 標頭檔
 //
+#include "CCurrentTime.h"
 
 #pragma once
 
@@ -50,4 +51,9 @@ public:
 	afx_msg void OnBnClickedButtonNcpa();
 	afx_msg void OnBnClickedWelcomeDlgButton();
 	afx_msg void OnBnClickedProgressDlgButton();
+	afx_msg void OnBnClickedCurrenttime();
+
+	
+	CCurrentTime* m_pCurrentTimeDlg;  // Modeless dialog
+	afx_msg void OnDestroy();
 };

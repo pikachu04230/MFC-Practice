@@ -10,6 +10,7 @@
 #define IDD_WELCOME_DIALOG              133
 #define IDD_WELCOME                     133
 #define IDD_PROGRESS                    138
+#define IDD_CURRENTTIME                 140
 #define IDC_BUTTON1                     1000
 #define IDC_BUTTON2                     1001
 #define IDC_BUTTON3                     1002
@@ -30,15 +31,18 @@
 #define IDC_PROGRESS_BAR                1025
 #define IDC_START_BUTTON                1026
 #define IDC_PROGRESS_DLG_BUTTON         1027
-#define IDC_MSG_STATIC                  1028
+#define IDC_BUTTON7                     1029
+#define IDC_CURRENTTIME                 1029
+#define IDC_STATIC_TIME                 1030
+#define IDC_BUTTON_HIDE                 1031
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        140
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1029
+#define _APS_NEXT_CONTROL_VALUE         1032
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
