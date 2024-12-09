@@ -6,6 +6,8 @@
 #include "framework.h"
 #include "MyFirstMFCApp.h"
 #include "MyFirstMFCAppDlg.h"
+#include "CWelcomeDlg.h"
+#include "CProgressDlg.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -82,6 +84,9 @@ BEGIN_MESSAGE_MAP(CMyFirstMFCAppDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON5, &CMyFirstMFCAppDlg::OnBnClickedButton5)
 	ON_BN_CLICKED(IDOK, &CMyFirstMFCAppDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_CALCULATE, &CMyFirstMFCAppDlg::OnBnClickedCalculate)
+	ON_BN_CLICKED(IDC_BUTTON_NCPA, &CMyFirstMFCAppDlg::OnBnClickedButtonNcpa)
+	ON_BN_CLICKED(IDC_WELCOME_DLG_BUTTON, &CMyFirstMFCAppDlg::OnBnClickedWelcomeDlgButton)
+	ON_BN_CLICKED(IDC_PROGRESS_DLG_BUTTON, &CMyFirstMFCAppDlg::OnBnClickedProgressDlgButton)
 END_MESSAGE_MAP()
 
 
@@ -378,4 +383,27 @@ void CMyFirstMFCAppDlg::OnBnClickedCalculate()
 	UpdateData(TRUE);
 	m_nResult = m_nAddend1 + m_nAddend2;
 	UpdateData(FALSE);
+}
+
+
+void CMyFirstMFCAppDlg::OnBnClickedButtonNcpa()
+{
+	// TODO: 在此加入控制項告知處理常式程式碼
+	ShellExecute(NULL, NULL, L"ncpa.cpl", NULL, NULL, SW_SHOWNORMAL);
+}
+
+
+void CMyFirstMFCAppDlg::OnBnClickedWelcomeDlgButton()
+{
+	// TODO: 在此加入控制項告知處理常式程式碼
+	CWelcomeDlg dlg;
+	dlg.DoModal();
+}
+
+
+void CMyFirstMFCAppDlg::OnBnClickedProgressDlgButton()
+{
+	// TODO: 在此加入控制項告知處理常式程式碼
+	CProgressDlg dlg;
+	dlg.DoModal();
 }

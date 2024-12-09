@@ -183,6 +183,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CProgressDlg.h" />
+    <ClInclude Include="CWelcomeDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MyFirstMFCApp.h" />
     <ClInclude Include="MyFirstMFCAppDlg.h" />
@@ -191,6 +193,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CProgressDlg.cpp" />
+    <ClCompile Include="CWelcomeDlg.cpp" />
     <ClCompile Include="MyFirstMFCApp.cpp" />
     <ClCompile Include="MyFirstMFCAppDlg.cpp" />
     <ClCompile Include="pch.cpp">

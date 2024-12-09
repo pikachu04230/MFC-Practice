@@ -47,4 +47,7 @@ public:
 	// Calculator Result
 	int m_nResult;
 	afx_msg void OnBnClickedCalculate();
+	afx_msg void OnBnClickedButtonNcpa();
+	afx_msg void OnBnClickedWelcomeDlgButton();
+	afx_msg void OnBnClickedProgressDlgButton();
 };
