@@ -184,6 +184,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CCurrentTime.h" />
+    <ClInclude Include="CPageCalculator.h" />
+    <ClInclude Include="CPageEdit.h" />
+    <ClInclude Include="CPageMain.h" />
+    <ClInclude Include="CPageUtility.h" />
     <ClInclude Include="CProgressDlg.h" />
     <ClInclude Include="CWelcomeDlg.h" />
     <ClInclude Include="framework.h" />
@@ -195,6 +199,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCurrentTime.cpp" />
+    <ClCompile Include="CPageCalculator.cpp" />
+    <ClCompile Include="CPageEdit.cpp" />
+    <ClCompile Include="CPageMain.cpp" />
+    <ClCompile Include="CPageUtility.cpp" />
     <ClCompile Include="CProgressDlg.cpp" />
     <ClCompile Include="CWelcomeDlg.cpp" />
     <ClCompile Include="MyFirstMFCApp.cpp" />

@@ -6,9 +6,6 @@
 #include "framework.h"
 #include "MyFirstMFCApp.h"
 #include "MyFirstMFCAppDlg.h"
-#include "CWelcomeDlg.h"
-#include "CProgressDlg.h"
-#include "CCurrentTime.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -55,11 +52,10 @@ END_MESSAGE_MAP()
 
 CMyFirstMFCAppDlg::CMyFirstMFCAppDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MYFIRSTMFCAPP_DIALOG, pParent)
-	, m_InputText1(_T(""))
-	, m_InputText2(_T(""))
-	, m_nAddend1(0)
-	, m_nAddend2(0)
-	, m_nResult(0)
+	, m_pPageMain(nullptr)
+	, m_pPageEdit(nullptr)
+	, m_pPageCalculator(nullptr)
+	, m_pPageUtility(nullptr)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -67,29 +63,14 @@ CMyFirstMFCAppDlg::CMyFirstMFCAppDlg(CWnd* pParent /*=nullptr*/)
 void CMyFirstMFCAppDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDIT1, m_InputText1);
-	DDX_Text(pDX, IDC_EDIT2, m_InputText2);
-	DDX_Text(pDX, IDC_CALCULATOR_NUM1, m_nAddend1);
-	DDX_Text(pDX, IDC_CALCULATOR_NUM2, m_nAddend2);
-	DDX_Text(pDX, IDC_CALCULATOR_RESULT, m_nResult);
+	DDX_Control(pDX, IDC_TAB_MAIN, m_tabCtrl);
 }
 
 BEGIN_MESSAGE_MAP(CMyFirstMFCAppDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON1, &CMyFirstMFCAppDlg::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_BUTTON2, &CMyFirstMFCAppDlg::OnBnClickedButton2)
-	ON_BN_CLICKED(IDC_BUTTON3, &CMyFirstMFCAppDlg::OnBnClickedButton3)
-	ON_BN_CLICKED(IDC_BUTTON4, &CMyFirstMFCAppDlg::OnBnClickedButton4)
-	ON_BN_CLICKED(IDC_BUTTON5, &CMyFirstMFCAppDlg::OnBnClickedButton5)
-	ON_BN_CLICKED(IDOK, &CMyFirstMFCAppDlg::OnBnClickedOk)
-	ON_BN_CLICKED(IDC_CALCULATE, &CMyFirstMFCAppDlg::OnBnClickedCalculate)
-	ON_BN_CLICKED(IDC_BUTTON_NCPA, &CMyFirstMFCAppDlg::OnBnClickedButtonNcpa)
-	ON_BN_CLICKED(IDC_WELCOME_DLG_BUTTON, &CMyFirstMFCAppDlg::OnBnClickedWelcomeDlgButton)
-	ON_BN_CLICKED(IDC_PROGRESS_DLG_BUTTON, &CMyFirstMFCAppDlg::OnBnClickedProgressDlgButton)
-	ON_BN_CLICKED(IDC_CURRENTTIME, &CMyFirstMFCAppDlg::OnBnClickedCurrenttime)
-	ON_WM_DESTROY()
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB_MAIN, &CMyFirstMFCAppDlg::OnTcnSelchangeTabMain)
 END_MESSAGE_MAP()
 
 
@@ -125,14 +106,30 @@ BOOL CMyFirstMFCAppDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 設定小圖示
 
 	// TODO: 在此加入額外的初始設定
-	CListBox* pListBox = (CListBox*)GetDlgItem(IDC_LIST1);
-	CComboBox* pComboBox = (CComboBox*)GetDlgItem(IDC_COMBO1);
-	pListBox->AddString(_T("項目 L1"));
-	pListBox->AddString(_T("項目 L2"));
-	pListBox->AddString(_T("項目 L3"));
-	pComboBox->AddString(_T("項目 C1"));
-	pComboBox->AddString(_T("項目 C2"));
-	pComboBox->AddString(_T("項目 C3"));
+	// 新增標籤頁
+	m_tabCtrl.InsertItem(0, _T("Main"));
+	m_tabCtrl.InsertItem(1, _T("Edit"));
+	m_tabCtrl.InsertItem(2, _T("Calculator"));
+	m_tabCtrl.InsertItem(3, _T("Utility"));
+
+	// 初始化子對話方塊
+	m_pPageMain			= new CPageMain();
+	m_pPageEdit			= new CPageEdit();
+	m_pPageCalculator	= new CPageCalculator();
+	m_pPageUtility		= new CPageUtility();
+
+	// 建立子對話方塊
+	m_pPageMain			->Create(IDD_PAGE_MAIN, this);
+	m_pPageEdit			->Create(IDD_PAGE_EDIT, this);
+	m_pPageCalculator	->Create(IDD_PAGE_CALCULATOR, this);
+	m_pPageUtility		->Create(IDD_PAGE_UTILITY, this);
+
+
+	// 顯示第一個子對話方塊
+	m_pPageMain->ShowWindow(SW_SHOW);
+	m_pPageEdit->ShowWindow(SW_HIDE);
+	m_pPageCalculator->ShowWindow(SW_HIDE);
+	m_pPageUtility->ShowWindow(SW_HIDE);
 
 	return TRUE;  // 傳回 TRUE，除非您對控制項設定焦點
 }
@@ -187,257 +184,13 @@ HCURSOR CMyFirstMFCAppDlg::OnQueryDragIcon()
 }
 
 
-
-void CMyFirstMFCAppDlg::OnBnClickedButton1()
+void CMyFirstMFCAppDlg::OnTcnSelchangeTabMain(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	// TODO: 在此加入控制項告知處理常式程式碼
-	int nResponse = AfxMessageBox(_T("按鈕1被點擊了！"), MB_ABORTRETRYIGNORE|MB_ICONSTOP);
-
-	CEdit* pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
-
-	switch (nResponse)
-	{
-	case IDRETRY:
-	case IDABORT:
-		pEdit->SetWindowText(_T("按鈕1被點擊了"));
-		break;
-	case IDIGNORE:
-		pEdit->SetWindowText(_T("被無視了"));
-		break;
-	default:
-		pEdit->SetWindowText(_T("Error"));
-		break;
-	}
-}
-
-void CMyFirstMFCAppDlg::OnBnClickedButton2()
-{
-	// TODO: 在此加入控制項告知處理常式程式碼
-	if (UpdateData(TRUE))
-	{
-		CEdit* pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
-		if (pEdit == nullptr) {
-			AfxMessageBox(_T("無法找到編輯框控制項！"));
-			return;
-		}
-
-		int nStartChar, nEndChar;
-		CString msg;
-
-		// 確保編輯框內有文本
-		int nTextLength = pEdit->GetWindowTextLength();
-		if (nTextLength > 0) {
-			pEdit->GetSel(nStartChar, nEndChar);  // 獲取選中的文本範圍
-
-			if (nStartChar == nEndChar)
-			{
-				AfxMessageBox(_T("你沒有選擇任何文字..."));
-			}
-			else
-			{
-				msg.Format(_T("你選了%d~%d，嘻嘻！"), nStartChar, nEndChar);
-
-				int nResponse = AfxMessageBox(msg, MB_RETRYCANCEL | MB_ICONERROR);
-
-				if (nResponse == IDRETRY)
-				{
-					// 設置選中從字符 0 到 3 的範圍
-					pEdit->SetSel(0, 3);
-					AfxMessageBox(_T("幫你把前三個字選起來"), MB_ICONINFORMATION);
-				}
-				else
-				{
-					pEdit->SetSel(0, 5);
-					AfxMessageBox(_T("幫你把前五個字選起來"), MB_ICONINFORMATION);
-				}
-			}
-			// 設置焦點回到編輯框，這樣選擇的文字會顯示出來
-			pEdit->SetFocus();
-		}
-		else {
-			AfxMessageBox(_T("文本框內沒有足夠的文本！"));
-		}
-	}
-}
-void CMyFirstMFCAppDlg::OnBnClickedButton3()
-{
-	// TODO: 在此加入控制項告知處理常式程式碼
-	int nResponse = AfxMessageBox(_T("你確定要繼續嗎？"), MB_YESNO | MB_ICONWARNING);
-	if (nResponse == IDYES) {
-		// 使用者選擇了 "Yes"
-		if (UpdateData(TRUE)) {
-			if (m_InputText2.GetLength() > 0)
-			{
-				AfxMessageBox(m_InputText2, MB_ICONINFORMATION);
-			}
-			else
-			{
-				AfxMessageBox(_T("請輸入密碼!"), MB_ICONERROR);
-			}
-		}
-	}
-	else {
-		// 使用者選擇了 "No"
-		AfxMessageBox(_T("Oh No!"), MB_ICONERROR);
-	}
-}
-
-void CMyFirstMFCAppDlg::OnBnClickedButton4()
-{
-	// TODO: 在此加入控制項告知處理常式程式碼
-	CListBox* pListBox = (CListBox*)GetDlgItem(IDC_LIST1);
-	int count = pListBox->GetCount();
-	CString s;
-	s.Format(_T("項目 L%d"), count+1);
-	pListBox->AddString(s);
-}
-
-
-void CMyFirstMFCAppDlg::OnBnClickedButton5()
-{
-	// TODO: 在此加入控制項告知處理常式程式碼
-	CListBox* pListBox = (CListBox*)GetDlgItem(IDC_LIST1);
-	int count = pListBox->GetCount();
-	if (count > 0)
-	{
-		pListBox->DeleteString(count-1);	// Delete last
-	}
-	else
-	{
-		AfxMessageBox(_T("No item to delete!"));
-	}
-}
-
-
-void CMyFirstMFCAppDlg::OnBnClickedOk()
-{
-	// TODO: 在此加入控制項告知處理常式程式碼
-	CListBox* pListBox = (CListBox*)GetDlgItem(IDC_LIST1);
-	CComboBox* pComboBox = (CComboBox*)GetDlgItem(IDC_COMBO1);
-
-	// Show ListBox Chosen items
-	int nSelCount = pListBox->GetSelCount();
-	if (nSelCount > 0)
-	{
-		CString msg = _T("ListBox Selected:\n");
-		int nCount = pListBox->GetCount();
-		int nChosen = 0;
-		bool firstLine = true;
-		for (int i = 0; i < nCount; i++)
-		{
-			if (pListBox->GetSel(i))
-			{
-				CString sItem;
-				pListBox->GetText(i, sItem);
-				if (firstLine)
-				{
-					msg += sItem;
-					firstLine = false;
-				}
-				else
-				{
-					msg += _T("\n") + sItem;
-				}
-			}
-		}
-		AfxMessageBox(msg, MB_OK | MB_ICONINFORMATION);
-	}
-	else
-	{
-		AfxMessageBox(_T("No item Selected in ListBox!"), MB_OK | MB_ICONERROR);
-	}
-
-	// Show ComboBox Chosen items
-	int nIndex = pComboBox->GetCurSel();
-	if (nIndex != CB_ERR)
-	{
-		CString msg, sItem;
-		pComboBox->GetLBText(nIndex, sItem);
-		msg = _T("ComboBox Selected:\n") + sItem;
-		AfxMessageBox(msg, MB_OK | MB_ICONINFORMATION);
-	}
-	else
-	{
-		AfxMessageBox(_T("No item Selected in ComboBox!"), MB_OK | MB_ICONERROR);
-	}
-
-	// Show Edit2 text
-	CEdit* pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
-	CString msg;
-	UpdateData(TRUE);
-	if (pEdit->GetWindowTextLength() > 0)
-	{
-		msg = _T("Your password is: ") + m_InputText2;
-		AfxMessageBox(msg, MB_OK | MB_ICONINFORMATION);
-	}
-	else
-	{
-		msg = _T("No password filled!");
-		AfxMessageBox(msg, MB_ICONERROR);
-	}
-
-	CDialogEx::OnOK();
-}
-
-
-void CMyFirstMFCAppDlg::OnBnClickedCalculate()
-{
-	// TODO: 在此加入控制項告知處理常式程式碼
-	UpdateData(TRUE);
-	m_nResult = m_nAddend1 + m_nAddend2;
-	UpdateData(FALSE);
-}
-
-
-void CMyFirstMFCAppDlg::OnBnClickedButtonNcpa()
-{
-	// TODO: 在此加入控制項告知處理常式程式碼
-	ShellExecute(NULL, NULL, L"ncpa.cpl", NULL, NULL, SW_SHOWNORMAL);
-}
-
-
-void CMyFirstMFCAppDlg::OnBnClickedWelcomeDlgButton()
-{
-	// TODO: 在此加入控制項告知處理常式程式碼
-	CWelcomeDlg dlg;
-	dlg.DoModal();
-}
-
-
-void CMyFirstMFCAppDlg::OnBnClickedProgressDlgButton()
-{
-	// TODO: 在此加入控制項告知處理常式程式碼
-	CProgressDlg dlg;
-	dlg.DoModal();
-}
-
-
-void CMyFirstMFCAppDlg::OnBnClickedCurrenttime()
-{
-	// TODO: 在此加入控制項告知處理常式程式碼
-	if (m_pCurrentTimeDlg != nullptr && IsWindow(m_pCurrentTimeDlg->m_hWnd))
-	{
-		m_pCurrentTimeDlg->ShowWindow(SW_SHOW);
-		m_pCurrentTimeDlg->SetFocus();
-	}
-	else
-	{
-		m_pCurrentTimeDlg = new CCurrentTime();
-		m_pCurrentTimeDlg->Create(IDD_CURRENTTIME, this);
-		m_pCurrentTimeDlg->ShowWindow(SW_SHOW);
-	}
-}
-
-
-void CMyFirstMFCAppDlg::OnDestroy()
-{
-	// TODO: 在此加入您的訊息處理常式程式碼
-	if (m_pCurrentTimeDlg != nullptr)
-	{
-		m_pCurrentTimeDlg->DestroyWindow();
-		delete m_pCurrentTimeDlg;
-		m_pCurrentTimeDlg = nullptr;
-	}
-
-	CDialogEx::OnDestroy();
+	int nSel = m_tabCtrl.GetCurSel();
+	m_pPageMain			->ShowWindow(nSel == 0 ? SW_SHOW : SW_HIDE);
+	m_pPageEdit			->ShowWindow(nSel == 1 ? SW_SHOW : SW_HIDE);
+	m_pPageCalculator	->ShowWindow(nSel == 2 ? SW_SHOW : SW_HIDE);
+	m_pPageUtility		->ShowWindow(nSel == 3 ? SW_SHOW : SW_HIDE);
+	*pResult = 0;
 }
