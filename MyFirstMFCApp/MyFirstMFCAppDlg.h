@@ -1,7 +1,10 @@
 ﻿
 // MyFirstMFCAppDlg.h: 標頭檔
 //
-#include "CCurrentTime.h"
+#include "CPageMain.h"
+#include "CPageEdit.h"
+#include "CPageCalculator.h"
+#include "CPageUtility.h"
 
 #pragma once
 
@@ -33,27 +36,11 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedButton1();
-	afx_msg void OnBnClickedButton2();
-	afx_msg void OnBnClickedButton3();
-	CString m_InputText1;
-	CString m_InputText2;
-	afx_msg void OnBnClickedButton4();
-	afx_msg void OnBnClickedButton5();
-	afx_msg void OnBnClickedOk();
-	// Calculator num1
-	int m_nAddend1;
-	// Calculator num2
-	int m_nAddend2;
-	// Calculator Result
-	int m_nResult;
-	afx_msg void OnBnClickedCalculate();
-	afx_msg void OnBnClickedButtonNcpa();
-	afx_msg void OnBnClickedWelcomeDlgButton();
-	afx_msg void OnBnClickedProgressDlgButton();
-	afx_msg void OnBnClickedCurrenttime();
+	CPageMain*			m_pPageMain;
+	CPageEdit*			m_pPageEdit;
+	CPageCalculator*	m_pPageCalculator;
+	CPageUtility*		m_pPageUtility;
 
-	
-	CCurrentTime* m_pCurrentTimeDlg;  // Modeless dialog
-	afx_msg void OnDestroy();
+	CTabCtrl m_tabCtrl;
+	afx_msg void OnTcnSelchangeTabMain(NMHDR* pNMHDR, LRESULT* pResult);
 };

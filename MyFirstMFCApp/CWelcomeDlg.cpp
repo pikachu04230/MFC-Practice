@@ -12,7 +12,7 @@
 IMPLEMENT_DYNAMIC(CWelcomeDlg, CDialogEx)
 
 CWelcomeDlg::CWelcomeDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_WELCOME_DIALOG, pParent)
+	: CDialogEx(IDD_DLG_WELCOME, pParent)
 {
 
 }

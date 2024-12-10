@@ -42,6 +42,18 @@
     <ClInclude Include="CCurrentTime.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="CPageMain.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="CPageEdit.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="CPageCalculator.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="CPageUtility.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyFirstMFCApp.cpp">
@@ -60,6 +72,18 @@
       <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="CCurrentTime.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="CPageMain.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="CPageEdit.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="CPageCalculator.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="CPageUtility.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
   </ItemGroup>

@@ -86,8 +86,8 @@ BOOL CMyFirstMFCAppApp::InitInstance()
 	}
 	else if (nResponse == -1)
 	{
-		TRACE(traceAppMsg, 0, "警告: 對話方塊建立失敗，因此，應用程式意外終止。\n");
-		TRACE(traceAppMsg, 0, "警告: 如果您要在對話方塊上使用 MFC 控制項，則無法 #define _AFX_NO_MFC_CONTROLS_IN_DIALOGS。\n");
+		TRACE(traceAppMsg, 0, _T("警告: 對話方塊建立失敗，因此，應用程式意外終止。\n"));
+		TRACE(traceAppMsg, 0, _T("警告: 如果您要在對話方塊上使用 MFC 控制項，則無法 #define _AFX_NO_MFC_CONTROLS_IN_DIALOGS。\n"));
 	}
 
 	// 刪除上面所建立的殼層管理員。
