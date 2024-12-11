@@ -12,7 +12,7 @@
 IMPLEMENT_DYNAMIC(CProgressDlg, CDialogEx)
 
 CProgressDlg::CProgressDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_PROGRESS, pParent)
+	: CDialogEx(IDD_DLG_PROGRESS, pParent)
 {
 
 }

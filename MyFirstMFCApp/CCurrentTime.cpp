@@ -12,7 +12,7 @@
 IMPLEMENT_DYNAMIC(CCurrentTime, CDialogEx)
 
 CCurrentTime::CCurrentTime(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_CURRENTTIME, pParent)
+	: CDialogEx(IDD_DLG_CURRENTTIME, pParent)
 {
 
 }
