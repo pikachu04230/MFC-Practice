@@ -15,6 +15,7 @@ ehthumbs.db
 # Visual Studio 生成的文件
 .vs/
 .vscode/
+*.aps
 *.suo
 *.user
 *.userosscache
