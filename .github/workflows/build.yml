@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up MSBuild
+      uses: microsoft/setup-msbuild@v1
+      
+    - name: Build MFC Project
+      run: |
+        msbuild MyFirstMFCApp.sln /p:Configuration=Release /p:Platform=x64
+      env:
+        VSCMD_SKIP_SENDTELEMETRY: true
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: BuildOutputs
+        path: x64\Release\*.exe
